@@ -48,15 +48,6 @@ namespace API.Data
          .HasOne<Unit>(s => s.Unit)
          .WithMany(g => g.UnitComments)
          .HasForeignKey(s => s.Unit_Id);
-
-            modelBuilder.Entity<Word>()
-          .HasOne<WordUnit>(s => s.WordUnit)
-         .WithMany(g => g.Word)
-         .HasForeignKey(s => s.Unit_Id);
-            modelBuilder.Entity<Word>()
-                .HasOne<Student>(s => s.Student)
-                .WithMany(g => g.Words)
-                .HasForeignKey(s => s.Student_Id);
             modelBuilder.Entity<ForumThread>()
                 .HasOne<Account>(s => s.Account)
                 .WithMany(g => g.ForumThreads)
@@ -78,6 +69,7 @@ namespace API.Data
         public DbSet<Teacher> Teachers { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<Course> Courses { get; set; }
+        public DbSet<University> Universities { get; set; }
         public DbSet<StudentsCourses> StudentsCourses { get; set; }
         public DbSet<StudentsUnits> StudentsUnits { get; set; }
         public DbSet<Unit> Units { get; set; }

@@ -11,7 +11,6 @@ namespace API.Models.ModelDBs
         public string Type { get; set; } 
 
         public virtual WordUnit WordUnit { get; set; }
-        public virtual Student Student { get; set; }
 
     }
 }

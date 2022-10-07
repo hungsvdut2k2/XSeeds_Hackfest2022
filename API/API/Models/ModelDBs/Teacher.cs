@@ -10,6 +10,8 @@ namespace API.Models.ModelDBs
         [Key]
         public int Teacher_Id { get; set; }
         public int University_Id { get; set; }
+        public string Teacher_Name { get; set; }
+        public string Katakana_Name { get; set; }
 
         //
         public virtual Account Account { get; set; }

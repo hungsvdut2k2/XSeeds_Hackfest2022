@@ -1,4 +1,5 @@
 ﻿using API.Models;
+using API.Models.ModelDBs;
 using API.Models.ModelDTOs;
 using API.Services;
 using API.Services.IServices;
@@ -22,12 +23,16 @@ namespace API.Controllers
         private readonly IAccountService _accountService;
         private readonly IConfiguration _configuration;
         private readonly IEmailService _emailService;
+        private readonly IStudentService _studentService;
+        private readonly ITeacherService _teacherService;
 
-        public AccountsController(IAccountService accountService, IConfiguration configuration, IEmailService emailService)
+        public AccountsController(IAccountService accountService, IConfiguration configuration, IEmailService emailService, IStudentService studentService, ITeacherService teacherService)
         {
             this._accountService = accountService;
             this._configuration = configuration;
             this._emailService = emailService;
+            _studentService = studentService;
+            _teacherService = teacherService;
         }
         [HttpPost("register")]
         public async Task<ActionResult> Register(AccountDTO request)
@@ -37,6 +42,7 @@ namespace API.Controllers
                 return BadRequest("User Already Exist");
             }
             _accountService.CreatPasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
+            
             var newAccount = new Account
             {
                 Email = request.Email,
@@ -46,6 +52,39 @@ namespace API.Controllers
                 VerificationToken = _accountService.CreateRandomToken()
             };
             await _accountService.AddAsync(newAccount);
+
+            if (request.Role == "Student")
+            {
+                var newStudent = new Student
+                {
+                    University_Id = request.University_Id,
+                    VietnameseName = request.Full_Name,
+                    Account = newAccount,
+                    KatakanaName = request.Katakana_Name,
+                };
+                 await _studentService.AddAsync(newStudent);
+               
+                
+            }
+            else if(request.Role == "Teacher")
+            {
+                var newTeacher = new Teacher
+                {
+                    University_Id = request.University_Id,
+                    Account = newAccount,
+                    Katakana_Name = request.Katakana_Name
+                };
+               await  _teacherService.AddAsync(newTeacher);
+
+            }
+            else if(request.Role == "Admin")
+            {
+                var newAdmin = new Admin
+                {
+                    Account = newAccount
+                };
+            }
+            
             var sentEmail = new EmailDTO
             {
                 To = newAccount.Email,

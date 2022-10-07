@@ -35,6 +35,8 @@ builder.Services.AddScoped<IStudentRepository, StudentRepository>();
 builder.Services.AddScoped<IStudentService, StudentService>();
 
 builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddScoped<ITeacherRepository, TeacherRepository>();
+builder.Services.AddScoped<ITeacherService, TeacherService>();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {
     options.TokenValidationParameters = new TokenValidationParameters
@@ -68,6 +70,7 @@ builder.Services.AddCors(options =>
             builder.WithOrigins("*").AllowAnyHeader().AllowAnyMethod();
         });
 });
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

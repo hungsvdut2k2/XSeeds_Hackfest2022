@@ -18,6 +18,5 @@ namespace API.Models
         public virtual Account Account { get; set; }
 
         public virtual ICollection<StudentsCourses> StudentsCourses { get; set; }
-        public virtual ICollection<Word> Words { get; set; }
     }
 }

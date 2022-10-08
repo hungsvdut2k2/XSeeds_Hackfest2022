@@ -6,8 +6,9 @@ namespace API.Models.ModelDTOs
     {
         public int Course_Id { get; set; }
         public string Course_Name { get; set; }
-        public string Type { get; set; }
+        public string Level { get; set; }
         public int Max_Bonus_Star { get; set; }
-        public DateTime EstimateDay { get; set; }
+        public int EstimateDay { get; set; }
+        public int LearningPathId { get; set; }
     }
 }

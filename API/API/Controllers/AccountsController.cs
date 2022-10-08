@@ -1,4 +1,5 @@
-﻿using API.Models;
+﻿using API.Data;
+using API.Models;
 using API.Models.ModelDBs;
 using API.Models.ModelDTOs;
 using API.Services;
@@ -26,8 +27,9 @@ namespace API.Controllers
         private readonly IStudentService _studentService;
         private readonly ITeacherService _teacherService;
         private readonly IUniversityService _universityService;
+        private readonly DataContext _context;
 
-        public AccountsController(IAccountService accountService, IConfiguration configuration, IEmailService emailService, IStudentService studentService, ITeacherService teacherService, IUniversityService universityService)
+        public AccountsController(IAccountService accountService, IConfiguration configuration, IEmailService emailService, IStudentService studentService, ITeacherService teacherService, IUniversityService universityService, DataContext context)
         {
             this._accountService = accountService;
             this._configuration = configuration;
@@ -35,6 +37,7 @@ namespace API.Controllers
             _studentService = studentService;
             _teacherService = teacherService;
             _universityService = universityService;
+            _context = context;
         }
         [HttpPost("register")]
         public async Task<ActionResult> Register(AccountDTO request)
@@ -44,7 +47,7 @@ namespace API.Controllers
                 return BadRequest("User Already Exist");
             }
             _accountService.CreatPasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
-            University university = await _universityService.GetUniversityById(request.University_Id);
+            University university = _context.Universities.Where(w => w.University_Id == request.University_Id).FirstOrDefault();
             var newAccount = new Account
             {
                 Email = request.Email,

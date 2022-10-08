@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20221008092118_editRelationship")]
-    partial class editRelationship
+    [Migration("20221008060703_addLearningPathTable")]
+    partial class addLearningPathTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -90,6 +90,9 @@ namespace API.Migrations
                     b.Property<DateTime>("EstimateDay")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("Learning_Path_Id")
+                        .HasColumnType("int");
+
                     b.Property<int>("Max_Bonus_Star")
                         .HasColumnType("int");
 
@@ -98,6 +101,8 @@ namespace API.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Course_Id");
+
+                    b.HasIndex("Learning_Path_Id");
 
                     b.ToTable("Courses");
                 });
@@ -187,6 +192,23 @@ namespace API.Migrations
                     b.HasKey("Word_Id");
 
                     b.ToTable("Kanjis");
+                });
+
+            modelBuilder.Entity("API.Models.ModelDBs.LearningPath", b =>
+                {
+                    b.Property<int>("Path_Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Path_Id"), 1L, 1);
+
+                    b.Property<string>("Path_Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Path_Id");
+
+                    b.ToTable("LearningPath");
                 });
 
             modelBuilder.Entity("API.Models.ModelDBs.StudentsCourses", b =>
@@ -427,6 +449,9 @@ namespace API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Star")
+                        .HasColumnType("int");
+
                     b.Property<int>("University_Id")
                         .HasColumnType("int");
 
@@ -456,6 +481,17 @@ namespace API.Migrations
                         .IsRequired();
 
                     b.Navigation("Account");
+                });
+
+            modelBuilder.Entity("API.Models.ModelDBs.Course", b =>
+                {
+                    b.HasOne("API.Models.ModelDBs.LearningPath", "LearningPath")
+                        .WithMany("Course")
+                        .HasForeignKey("Learning_Path_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("LearningPath");
                 });
 
             modelBuilder.Entity("API.Models.ModelDBs.ForumThread", b =>
@@ -658,6 +694,11 @@ namespace API.Migrations
             modelBuilder.Entity("API.Models.ModelDBs.Forum", b =>
                 {
                     b.Navigation("ForumThreads");
+                });
+
+            modelBuilder.Entity("API.Models.ModelDBs.LearningPath", b =>
+                {
+                    b.Navigation("Course");
                 });
 
             modelBuilder.Entity("API.Models.ModelDBs.Teacher", b =>

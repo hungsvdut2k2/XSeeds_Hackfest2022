@@ -34,9 +34,9 @@ namespace API.Controllers
             return Ok(await _studentService.GetStudentById(Student_Id));
         }
         [HttpPost]
-        public async Task<ActionResult> AddStudent([FromBody] StudentDTO StudentDTO)
+        public async Task<ActionResult> AddStudent([FromBody] Student student)
         {
-            if (StudentDTO == null)
+            if (student == null)
             {
                 return BadRequest(ModelState);
             }
@@ -44,19 +44,17 @@ namespace API.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var Student = mapper.Map<Student>(StudentDTO);
-            await _studentService.AddAsync(Student);
+            await _studentService.AddAsync(student);
             return Ok("Successfully created");
         }
         [HttpPut]
-        public async Task<ActionResult> UpdateStudent([FromBody] Student StudentDTO)
+        public async Task<ActionResult> UpdateStudent([FromBody] Student student)
         {
-            if (StudentDTO == null)
+            if (student == null)
             {
                 return BadRequest();
             }
-            var Student = mapper.Map<Student>(StudentDTO);
-            _studentService.Update(Student);
+            _studentService.Update(student);
             return Ok("Update Successfully");
         }
         [HttpDelete("{Student_Id}")]

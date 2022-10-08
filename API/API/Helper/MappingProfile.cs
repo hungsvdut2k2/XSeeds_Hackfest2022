@@ -13,8 +13,6 @@ namespace API.Helper
             CreateMap<CourseDTO, Course>();
             CreateMap<StudentDTO, Student>();
             CreateMap<Student, StudentDTO>();
-
-
         }
     }
 }

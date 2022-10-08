@@ -13,18 +13,16 @@ namespace API.Controllers
     public class CourseController : ControllerBase
     {
         private readonly ICourseService _courseService;
-        private readonly IMapper mapper;
 
-        public CourseController(ICourseService courseService, IMapper mapper)
+        public CourseController(ICourseService courseService)
         {
             this._courseService = courseService;
-            this.mapper = mapper;
         }
         [HttpGet]
         [Route("")]
         public async Task<ActionResult<IEnumerable<Course>>> GetAllCourses()
         {
-            var result = mapper.Map<IEnumerable<CourseDTO>>(await _courseService.GetAllAsync());
+            var result = await _courseService.GetAllAsync();
             return Ok(result);
         }
         [HttpGet]
@@ -35,9 +33,9 @@ namespace API.Controllers
         }
         [HttpPost("")]
 
-        public async Task<ActionResult> AddCourse([FromBody] CourseDTO courseDTO)
+        public async Task<ActionResult> AddCourse([FromBody] Course course)
         {
-            if (courseDTO == null)
+            if (course == null)
             {
                 return BadRequest(ModelState);
             }
@@ -45,18 +43,16 @@ namespace API.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var course = mapper.Map<Course>(courseDTO);
             await _courseService.AddAsync(course);
             return Ok("Successfully created");
         }
         [HttpPut]
-        public async Task<ActionResult> UpdateCourse([FromBody] Course courseDTO)
+        public async Task<ActionResult> UpdateCourse([FromBody] Course course)
         {
-            if (courseDTO == null)
+            if (course == null)
             {
                 return BadRequest();
             }
-            var course = mapper.Map<Course>(courseDTO);
             _courseService.Update(course);
             return Ok("Update Successfully");
         }

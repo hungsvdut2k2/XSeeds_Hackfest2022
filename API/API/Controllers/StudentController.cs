@@ -13,18 +13,16 @@ namespace API.Controllers
     public class StudentController : ControllerBase
     {
         private readonly IStudentService _studentService;
-        private readonly IMapper mapper;
 
-        public StudentController(IStudentService studentService, IMapper mapper)
+        public StudentController(IStudentService studentService )
         {
             this._studentService = studentService;
-            this.mapper = mapper;
         }
         [HttpGet]
         [Route("")]
         public async Task<ActionResult<IEnumerable<Student>>> GetAllStudents()
         {
-            var result = mapper.Map<IEnumerable<StudentDTO>>(await _studentService.GetAllAsync());
+            var result = await _studentService.GetAllAsync();
             return Ok(result);
         }
         [HttpGet]

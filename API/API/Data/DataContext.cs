@@ -69,5 +69,6 @@ namespace API.Data
         public DbSet<Tango> Tangos { get; set; }
         public DbSet<Forum> Forums { get; set; }
         public DbSet<ForumThread> ForumThreads { get; set; }
+        public DbSet<Exam> Exams { get; set; }
     }
 }

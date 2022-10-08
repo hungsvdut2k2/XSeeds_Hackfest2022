@@ -60,6 +60,9 @@ builder.Services.AddScoped<IQuestionService, QuestionService>();
 builder.Services.AddScoped<ILearningPathRepository, LearningPathRepository>();
 builder.Services.AddScoped<ILearningPathService, LearningPathService>();
 
+builder.Services.AddScoped<IExamStudentsRepository, ExamStudentsRepository>();
+builder.Services.AddScoped<IExamStudentService, ExamStudentService>();
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {
     options.TokenValidationParameters = new TokenValidationParameters

@@ -100,7 +100,7 @@ namespace API.Controllers
             _examService.Delete(examDelete);
             return Ok();
         }
-        [HttpPost]
+        [HttpPost("finish/{Exam_id}/{Student_id}")]
         public async Task<ActionResult> AddExamStudent(int Examp_id,int student_id)
         {
             Exam exam = await _examService.GetExamById(Examp_id);

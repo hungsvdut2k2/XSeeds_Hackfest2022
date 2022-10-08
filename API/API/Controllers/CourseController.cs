@@ -178,5 +178,16 @@ namespace API.Controllers
             var selectedUnit = dataContext.Units.Where(w => w.Course_Id == CourseId && w.Number == UnitNumber).FirstOrDefault();
             return Ok(selectedUnit);
         }
+        [HttpGet("student/learning/{Student_Id}")]
+        public async Task<ActionResult<IEnumerable<Course>>> GetAllRegisteredCourse(int Student_Id)
+        {
+            IEnumerable<StudentsCourses> middle_object = await _studentCourseService.GetByStudentId(Student_Id);
+            List<Course> completedCourses = new List<Course>();
+            foreach (var item in middle_object)
+            {
+                completedCourses.Add(item.Course);
+            }
+            return Ok(completedCourses);
+        }
     }
 }

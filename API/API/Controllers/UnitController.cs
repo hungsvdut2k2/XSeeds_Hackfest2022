@@ -1,4 +1,5 @@
-﻿using API.Models;
+﻿using API.Data;
+using API.Models;
 using API.Models.ModelDBs;
 using API.Models.ModelDTOs;
 using API.Services;
@@ -18,13 +19,15 @@ namespace API.Controllers
         private readonly ITeacherService _teacherService;
         private readonly ICourseService _courseService;
         private readonly IStudentService _studentService;
+        private readonly DataContext _context;
 
-        public UnitController(IUnitService unitService, ITeacherService teacherService, ICourseService courseService, IStudentService studentService)
+        public UnitController(IUnitService unitService, ITeacherService teacherService, ICourseService courseService, IStudentService studentService, DataContext context)
         {
             this._unitService = unitService;
             _teacherService = teacherService;
             _courseService = courseService;
             _studentService = studentService;
+            _context = context;
         }
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Unit>>> GetAllUnits()
@@ -58,8 +61,34 @@ namespace API.Controllers
             {
                 WordUnit newWordUnit = new WordUnit 
                 {
-                
+                    Unit = unit,
+                    Word = null,
+                    Star = unitRequest.Star,
+                    Unit_Name = unitRequest.Unit_Name 
                 };
+                _context.WordUnits.Add(newWordUnit);
+                _context.SaveChanges();
+            }
+            else if(unitRequest.Type == "Video")
+            {
+                VideoUnit newVideoUnit = new VideoUnit
+                {
+                    Unit = unit,
+                    Star = unitRequest.Star,
+                    VideoUrl = unitRequest.VideoUrl
+                };
+                _context.VideoUnits.Add(newVideoUnit);
+                _context.SaveChanges();
+            }
+            else
+            {
+                GrammarUnit newGrammarUnit = new GrammarUnit
+                {
+                    Unit = unit,
+                    Content = unitRequest.Content
+                };
+                _context.GrammarUnits.Add(newGrammarUnit);
+                _context.SaveChanges();
             }
             return Ok();
         }
@@ -106,6 +135,26 @@ namespace API.Controllers
             student.Star += unit.Star;
             _studentService.Update(student);
             return Ok();
+        }
+        [HttpGet("{Unit_Id}")]
+        public async Task<ActionResult> GetUnitById(int Unit_Id)
+        {
+            Unit unit = await _unitService.GetUnitById(Unit_Id);
+            if (unit.Type == "Grammar")
+            {
+                GrammarUnit grammarUnit = _context.GrammarUnits.Where(w => w.Unit_Id == Unit_Id).FirstOrDefault();
+                return Ok(grammarUnit);
+            }
+            else if(unit.Type == "Video")
+            {
+                VideoUnit videoUnit = _context.VideoUnits.Where(w => w.Unit_Id == Unit_Id).FirstOrDefault();
+                return Ok(videoUnit);
+            }
+            else
+            {
+                WordUnit wordUnit = _context.WordUnits.Where(w => w.Unit_Id == Unit_Id).FirstOrDefault();
+                return Ok(wordUnit);
+            }
         }
     }
 }

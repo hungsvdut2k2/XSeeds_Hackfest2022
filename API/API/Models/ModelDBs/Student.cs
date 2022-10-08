@@ -1,6 +1,7 @@
 ﻿using API.Models.ModelDBs;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace API.Models
 {
@@ -15,8 +16,11 @@ namespace API.Models
         public string KatakanaName { get; set; }
 
         public virtual University University { get; set; }
+
+        [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
         public virtual Account Account { get; set; }
 
+        [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
         public virtual ICollection<StudentsCourses> StudentsCourses { get; set; }
     }
 }

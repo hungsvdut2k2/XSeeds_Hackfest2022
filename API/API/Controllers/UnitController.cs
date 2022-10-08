@@ -84,10 +84,10 @@ namespace API.Controllers
             _unitService.Delete(unit);
             return Ok("Delete Successfully");
         }
-        [HttpGet("Unit/{Couse_Id}")]
-        public async Task<ActionResult<IEnumerable<Unit>>> GetUnitByCourse(int Couse_Id)
+        [HttpGet("Units/{Course_Id}")]
+        public async Task<ActionResult<IEnumerable<Unit>>> GetUnitByCourse(int Course_Id)
         {
-            return Ok(await _unitService.getUnitByCourse(Couse_Id));
+            return Ok(await _unitService.getUnitByCourse(Course_Id));
         }
     }
 }

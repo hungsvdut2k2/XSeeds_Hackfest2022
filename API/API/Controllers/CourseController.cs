@@ -74,21 +74,20 @@ namespace API.Controllers
         }
         [HttpPost("")]
 
-        public async Task<ActionResult> AddCourse([FromBody] Course course)
+        public async Task<ActionResult> AddCourse([FromBody] CourseDTO request)
         {
-            if (course == null)
+            var newCourse = new Course
             {
-                return BadRequest(ModelState);
-            }
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            await _courseService.AddAsync(course);
-            return Ok("Successfully created");
+                Course_Name = request.Course_Name,
+                EstimateDay = request.EstimateDay,
+                Max_Bonus_Star = request.Max_Bonus_Star,
+                Type = request.Type
+            };
+            await _courseService.AddAsync(newCourse);
+            return Ok();
         }
         [HttpPut]
-        public async Task<ActionResult> UpdateCourse([FromBody] Course course)
+        public async Task<ActionResult> UpdateCourse([FromBody] CourseDTO request)
         {
             if (course == null)
             {

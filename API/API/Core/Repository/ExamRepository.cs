@@ -17,10 +17,10 @@ namespace API.Core.Repository
 
         }
 
-        public async Task<IEnumerable<Exam>> GetExamByStudent(int Student_Id)
-        {
-            return await _context.Exams.Where(p => p.Sudent_Id == Student_Id).ToListAsync();
-        }
+        //public async Task<IEnumerable<Exam>> GetExamByStudent(int Student_Id)
+        //{
+        //    return await _context.Exams.Where(p => p.Sudent_Id == Student_Id).ToListAsync();
+        //}
 
         public async Task<IEnumerable<Exam>> GetExamByUnit(int Unit_Id)
         {

@@ -12,7 +12,7 @@ namespace API.Services.IServices
         void Delete(Exam exam);
         Task<IEnumerable<Exam>> getExamByUnit(int Unit_Id);
 
-        Task<IEnumerable<Exam>> getExamByStudent(int Student_Id);
+        //Task<IEnumerable<Exam>> getExamByStudent(int Student_Id);
 
     }
 }

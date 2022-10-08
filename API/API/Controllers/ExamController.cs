@@ -37,13 +37,13 @@ namespace API.Controllers
         {
             return Ok(await _examService.getExamByUnit(Unit_Id));
         }
-        [HttpGet]
-        [Route ("Exam/{Student_Id}")]
-        public async Task<ActionResult<IEnumerable<Exam>>> getExamByStudent(int Student_Id)
-        {
-            var Result = await _examService.getExamByStudent(Student_Id);
-            return Ok(Result);
-        }
+        //[HttpGet]
+        //[Route ("Exam/{Student_Id}")]
+        //public async Task<ActionResult<IEnumerable<Exam>>> getExamByStudent(int Student_Id)
+        //{
+        //    var Result = await _examService.getExamByStudent(Student_Id);
+        //    return Ok(Result);
+        //}
 
 
         [HttpPut]
@@ -61,14 +61,7 @@ namespace API.Controllers
             if(exam == null)
             {
                 return NotFound();
-            }
-            exam.Exam_Name = examDTO.Exam_Name;
-            exam.Question = examDTO.Question;
-            exam.AnswerB = examDTO.AnswerB;
-            exam.AnswerC = examDTO.AnswerC;
-            exam.AnswerA = examDTO.AnswerA;
-            exam.AnswerD = exam.AnswerD;
-            exam.Answer = exam.Answer;
+            }            
             _examService.Update(exam);        
             return Ok();
         }
@@ -86,13 +79,7 @@ namespace API.Controllers
             var Exam = new Exam
             {
                 Unit_Id = examDTO.Unit_Id,
-                Exam_Name = examDTO.Exam_Name,
-                Question = examDTO.Question,
-                AnswerA = examDTO.AnswerA,
-                AnswerB = examDTO.AnswerB,
-                AnswerC = examDTO.AnswerC,
-                AnswerD = examDTO.AnswerD,
-                Answer = examDTO.Answer,
+               
             };
             await _examService.AddAsync(Exam);
             return Ok();

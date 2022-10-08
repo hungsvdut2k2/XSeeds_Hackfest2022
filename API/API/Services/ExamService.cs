@@ -36,10 +36,10 @@ namespace API.Services
             return await _examRepository.GetExamByIdAsync(exam_Id);
         }
 
-        public Task<IEnumerable<Exam>> getExamByStudent(int Student_Id)
-        {
-            return _examRepository.GetExamByStudent(Student_Id);
-        }
+        //public Task<IEnumerable<Exam>> getExamByStudent(int Student_Id)
+        //{
+        //    return _examRepository.GetExamByStudent(Student_Id);
+        //}
 
         public Task<IEnumerable<Exam>> getExamByUnit(int Unit_Id)
         {

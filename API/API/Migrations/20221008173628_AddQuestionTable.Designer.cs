@@ -4,6 +4,7 @@ using API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20221008173628_AddQuestionTable")]
+    partial class AddQuestionTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -117,27 +119,6 @@ namespace API.Migrations
                         .IsUnique();
 
                     b.ToTable("Exams");
-                });
-
-            modelBuilder.Entity("API.Models.ModelDBs.ExamStudent", b =>
-                {
-                    b.Property<int>("ExemStudent_Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ExemStudent_Id"), 1L, 1);
-
-                    b.Property<int>("Examp_Id")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Student_Id")
-                        .HasColumnType("int");
-
-                    b.HasKey("ExemStudent_Id");
-
-                    b.HasIndex("Examp_Id");
-
-                    b.ToTable("ExamStudents");
                 });
 
             modelBuilder.Entity("API.Models.ModelDBs.Forum", b =>
@@ -552,17 +533,6 @@ namespace API.Migrations
                     b.Navigation("Unit");
                 });
 
-            modelBuilder.Entity("API.Models.ModelDBs.ExamStudent", b =>
-                {
-                    b.HasOne("API.Models.ModelDBs.Exam", "Exam")
-                        .WithMany("ExamStudents")
-                        .HasForeignKey("Examp_Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Exam");
-                });
-
             modelBuilder.Entity("API.Models.ModelDBs.ForumThread", b =>
                 {
                     b.HasOne("API.Models.Account", "Account")
@@ -773,8 +743,6 @@ namespace API.Migrations
 
             modelBuilder.Entity("API.Models.ModelDBs.Exam", b =>
                 {
-                    b.Navigation("ExamStudents");
-
                     b.Navigation("Questions");
                 });
 

@@ -6,7 +6,7 @@ namespace API.Core.IRepository
     {
         Task<Exam> GetExamByIdAsync(int Exam_Id);
         Task<IEnumerable<Exam>> GetExamByUnit(int Unit_Id);
-        Task<IEnumerable<Exam>> GetExamByStudent(int Student_Id);
+     //   Task<IEnumerable<Exam>> GetExamByStudent(int Student_Id);
     
     }
 

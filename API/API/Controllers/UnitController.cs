@@ -23,7 +23,6 @@ namespace API.Controllers
             _courseService = courseService;
         }
         [HttpGet]
-        [Route("")]
         public async Task<ActionResult<IEnumerable<Unit>>> GetAllUnits()
         {
             var result = await _unitService.GetAllAsync();
@@ -56,25 +55,27 @@ namespace API.Controllers
                 Number = unitRequest.Number,
                 Star = unitRequest.Star
             };
-            _unitService.AddAsync(unit);
+            await _unitService.AddAsync(unit);
+            if(unitRequest.Type == "Word")
+            {
+                WordUnit newWordUnit = new WordUnit 
+                {
+                
+                };
+            }
             return Ok();
         }
         [HttpPut]
-        public async Task<ActionResult> UpdateUnit(int Unit_Id,[FromBody] UnitDTO unitRequest)
+        public async Task<ActionResult> UpdateUnit(UpdateUnitDTO request)
         {
-            if (unitRequest == null)
-            {
-                return BadRequest();
-            }
-            Unit unit = await _unitService.GetUnitById(Unit_Id);
+            Unit unit = await _unitService.GetUnitById(request.Unit_Id);
             if(unit == null)
             {
                 return NotFound();
             }
-            unit.Unit_Id = Unit_Id;
-            unit.Teacher_Id = unitRequest.Teacher_Id;
-            unit.Course_Id = unitRequest.Course_Id;
-            unit.Star = unitRequest.Star;
+            unit.Star = request.Star;
+            unit.Number = request.Number;
+            unit.Type = request.Type;
             _unitService.Update(unit);
             return Ok("Update Successfully");
         }

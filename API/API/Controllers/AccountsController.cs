@@ -25,14 +25,16 @@ namespace API.Controllers
         private readonly IEmailService _emailService;
         private readonly IStudentService _studentService;
         private readonly ITeacherService _teacherService;
+        private readonly IUniversityService _universityService;
 
-        public AccountsController(IAccountService accountService, IConfiguration configuration, IEmailService emailService, IStudentService studentService, ITeacherService teacherService)
+        public AccountsController(IAccountService accountService, IConfiguration configuration, IEmailService emailService, IStudentService studentService, ITeacherService teacherService, IUniversityService universityService)
         {
             this._accountService = accountService;
             this._configuration = configuration;
             this._emailService = emailService;
             _studentService = studentService;
             _teacherService = teacherService;
+            _universityService = universityService;
         }
         [HttpPost("register")]
         public async Task<ActionResult> Register(AccountDTO request)
@@ -42,7 +44,7 @@ namespace API.Controllers
                 return BadRequest("User Already Exist");
             }
             _accountService.CreatPasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
-            
+            University university = await _universityService.GetUniversityById(request.University_Id);
             var newAccount = new Account
             {
                 Email = request.Email,
@@ -57,7 +59,7 @@ namespace API.Controllers
             {
                 var newStudent = new Student
                 {
-                    University_Id = request.University_Id,
+                    University = university,
                     VietnameseName = request.Full_Name,
                     Account = newAccount,
                     KatakanaName = request.Katakana_Name,
@@ -70,7 +72,7 @@ namespace API.Controllers
             {
                 var newTeacher = new Teacher
                 {
-                    University_Id = request.University_Id,
+                    University = university,
                     Account = newAccount,
                     Teacher_Name = request.Full_Name,
                     Katakana_Name = request.Katakana_Name

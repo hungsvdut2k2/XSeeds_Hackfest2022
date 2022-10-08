@@ -17,12 +17,6 @@ namespace API.Models.ModelDBs
         
         public virtual Course Course { get; set; }
         public virtual Teacher Teacher { get; set; }
-        [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
-        public virtual ICollection<GrammarUnit> GrammarUnits { get; set; }
-        [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
-        public virtual ICollection<VideoUnit> VideoUnits {get; set; }
-        [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
-        public virtual ICollection<WordUnit> WordUnits { get; set; }
 
         public virtual ICollection<UnitComment> UnitComments { get; set; }
         [JsonIgnore(Condition = JsonIgnoreCondition.Always)]

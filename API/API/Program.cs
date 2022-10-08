@@ -45,6 +45,12 @@ builder.Services.AddScoped<ITeacherService, TeacherService>();
 builder.Services.AddScoped<IStudentCourseRepository, StudentCourseRepository>();
 builder.Services.AddScoped<IStudentCourseService, StudentCourseService>();
 
+builder.Services.AddScoped<IUniversityRepository, UniversityRepository>();
+builder.Services.AddScoped<IUniversityService, UniversityService>();
+
+builder.Services.AddScoped<IWordUnitRepository, WordUnitRepository>();
+builder.Services.AddScoped<IWordUnitService, WordUnitService>();
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {
     options.TokenValidationParameters = new TokenValidationParameters

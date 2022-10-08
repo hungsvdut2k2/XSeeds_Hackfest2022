@@ -60,7 +60,7 @@ namespace API.Migrations
 
                     b.HasKey("User_Id");
 
-                    b.ToTable("Accounts");
+                    b.ToTable("Accounts", (string)null);
                 });
 
             modelBuilder.Entity("API.Models.ModelDBs.Admin", b =>
@@ -70,7 +70,7 @@ namespace API.Migrations
 
                     b.HasKey("User_Id");
 
-                    b.ToTable("Admin");
+                    b.ToTable("Admin", (string)null);
                 });
 
             modelBuilder.Entity("API.Models.ModelDBs.Course", b =>
@@ -97,7 +97,7 @@ namespace API.Migrations
 
                     b.HasKey("Course_Id");
 
-                    b.ToTable("Courses");
+                    b.ToTable("Courses", (string)null);
                 });
 
             modelBuilder.Entity("API.Models.ModelDBs.Forum", b =>
@@ -114,7 +114,7 @@ namespace API.Migrations
 
                     b.HasKey("Forum_Id");
 
-                    b.ToTable("Forums");
+                    b.ToTable("Forums", (string)null);
                 });
 
             modelBuilder.Entity("API.Models.ModelDBs.ForumThread", b =>
@@ -140,7 +140,7 @@ namespace API.Migrations
 
                     b.HasIndex("Forum_Id");
 
-                    b.ToTable("ForumThreads");
+                    b.ToTable("ForumThreads", (string)null);
                 });
 
             modelBuilder.Entity("API.Models.ModelDBs.GrammarUnit", b =>
@@ -158,7 +158,7 @@ namespace API.Migrations
 
                     b.HasKey("Unit_Id");
 
-                    b.ToTable("GrammarUnits");
+                    b.ToTable("GrammarUnits", (string)null);
                 });
 
             modelBuilder.Entity("API.Models.ModelDBs.Kanji", b =>
@@ -184,7 +184,7 @@ namespace API.Migrations
 
                     b.HasKey("Word_Id");
 
-                    b.ToTable("Kanjis");
+                    b.ToTable("Kanjis", (string)null);
                 });
 
             modelBuilder.Entity("API.Models.ModelDBs.StudentsCourses", b =>
@@ -208,7 +208,7 @@ namespace API.Migrations
 
                     b.HasIndex("Course_Id");
 
-                    b.ToTable("StudentsCourses");
+                    b.ToTable("StudentsCourses", (string)null);
                 });
 
             modelBuilder.Entity("API.Models.ModelDBs.StudentsUnits", b =>
@@ -229,7 +229,7 @@ namespace API.Migrations
 
                     b.HasIndex("Unit_Id");
 
-                    b.ToTable("StudentsUnits");
+                    b.ToTable("StudentsUnits", (string)null);
                 });
 
             modelBuilder.Entity("API.Models.ModelDBs.Tango", b =>
@@ -247,7 +247,7 @@ namespace API.Migrations
 
                     b.HasKey("Word_Id");
 
-                    b.ToTable("Tangos");
+                    b.ToTable("Tangos", (string)null);
                 });
 
             modelBuilder.Entity("API.Models.ModelDBs.Teacher", b =>
@@ -279,7 +279,7 @@ namespace API.Migrations
                     b.HasIndex("User_Id")
                         .IsUnique();
 
-                    b.ToTable("Teachers");
+                    b.ToTable("Teachers", (string)null);
                 });
 
             modelBuilder.Entity("API.Models.ModelDBs.Unit", b =>
@@ -313,7 +313,7 @@ namespace API.Migrations
                     b.HasIndex("Teacher_Id")
                         .IsUnique();
 
-                    b.ToTable("Units");
+                    b.ToTable("Units", (string)null);
                 });
 
             modelBuilder.Entity("API.Models.ModelDBs.UnitComment", b =>
@@ -334,7 +334,7 @@ namespace API.Migrations
 
                     b.HasIndex("Unit_Id");
 
-                    b.ToTable("UnitComments");
+                    b.ToTable("UnitComments", (string)null);
                 });
 
             modelBuilder.Entity("API.Models.ModelDBs.University", b =>
@@ -351,7 +351,7 @@ namespace API.Migrations
 
                     b.HasKey("University_Id");
 
-                    b.ToTable("Universities");
+                    b.ToTable("Universities", (string)null);
                 });
 
             modelBuilder.Entity("API.Models.ModelDBs.VideoUnit", b =>
@@ -368,7 +368,7 @@ namespace API.Migrations
 
                     b.HasKey("Unit_Id");
 
-                    b.ToTable("VideoUnits");
+                    b.ToTable("VideoUnits", (string)null);
                 });
 
             modelBuilder.Entity("API.Models.ModelDBs.Word", b =>
@@ -396,7 +396,7 @@ namespace API.Migrations
 
                     b.HasIndex("WordUnitUnit_Id");
 
-                    b.ToTable("Words");
+                    b.ToTable("Words", (string)null);
                 });
 
             modelBuilder.Entity("API.Models.ModelDBs.WordUnit", b =>
@@ -413,7 +413,7 @@ namespace API.Migrations
 
                     b.HasKey("Unit_Id");
 
-                    b.ToTable("WordUnits");
+                    b.ToTable("WordUnits", (string)null);
                 });
 
             modelBuilder.Entity("API.Models.Student", b =>
@@ -445,7 +445,7 @@ namespace API.Migrations
                     b.HasIndex("User_Id")
                         .IsUnique();
 
-                    b.ToTable("Students");
+                    b.ToTable("Students", (string)null);
                 });
 
             modelBuilder.Entity("API.Models.ModelDBs.Admin", b =>

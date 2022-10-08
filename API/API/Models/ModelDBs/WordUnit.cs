@@ -1,10 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace API.Models.ModelDBs
 {
     public class WordUnit
     {
-        [Key]
+        [System.ComponentModel.DataAnnotations.KeyAttribute()]
+        [ForeignKey("Unit")]
         public int Unit_Id {get; set;}
         public string Unit_Name {get; set;}
         public int Star { get; set;}

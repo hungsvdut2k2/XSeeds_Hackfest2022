@@ -13,7 +13,9 @@ namespace API.Data
         //Fluent Api methods
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // 1,0 to Many
+
+
+            // one to Many
             modelBuilder.Entity<Student>()
             .HasOne<University>(s => s.University)
             .WithMany(g => g.Students)
@@ -28,21 +30,6 @@ namespace API.Data
            .HasOne<Course>(s => s.Course)
            .WithMany(g => g.Units)
            .HasForeignKey(s => s.Course_Id);
-
-            modelBuilder.Entity<VideoUnit>()
-          .HasOne<Unit>(s => s.Unit)
-          .WithMany(g => g.VideoUnits)
-          .HasForeignKey(s => s.Unit_Id);
-
-            modelBuilder.Entity<GrammarUnit>()
-         .HasOne<Unit>(s => s.Unit)
-         .WithMany(g => g.GrammarUnits)
-         .HasForeignKey(s => s.Unit_Id);
-
-            modelBuilder.Entity<WordUnit>()
-         .HasOne<Unit>(s => s.Unit)
-         .WithMany(g => g.WordUnits)
-         .HasForeignKey(s => s.Unit_Id);
 
             modelBuilder.Entity<UnitComment>()
          .HasOne<Unit>(s => s.Unit)

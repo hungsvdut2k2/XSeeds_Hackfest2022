@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace API.Models.ModelDBs
 {
@@ -6,6 +7,7 @@ namespace API.Models.ModelDBs
     {
         [Key]
         public int Word_Id { get; set; }
+        [ForeignKey("WordUnit")]
         public int Unit_Id { get; set; }
         public int Student_Id { get; set; }
         public string Type { get; set; } 

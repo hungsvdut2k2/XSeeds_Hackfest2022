@@ -15,11 +15,6 @@ namespace API.Models.ModelDBs
         public int Estimate_Day { get; set; }
         [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
 
-        [ForeignKey("LearningPath")]
-        public int Learning_Path_Id { get; set; }
-        public LearningPath LearningPath { get; set; }
-
-        [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
         public virtual ICollection<StudentsCourses> StudentsCourses { get; set; }
 
         [JsonIgnore(Condition = JsonIgnoreCondition.Always)]

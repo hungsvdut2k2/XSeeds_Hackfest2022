@@ -106,8 +106,7 @@ namespace API.Controllers
                 Course_Name = request.Course_Name,
                 Estimate_Day = request.EstimateDay,
                 Max_Bonus_Star = request.Max_Bonus_Star,
-                Level = request.Level,
-                LearningPath = learningPath
+                Level = request.Level
             };
             await _courseService.AddAsync(newCourse);
             return Ok(newCourse);

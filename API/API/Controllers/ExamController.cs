@@ -32,7 +32,7 @@ namespace API.Controllers
             return Ok(await _examService.GetExamById(Exam_Id));
         }
         [HttpGet]
-        [Route("Exam/{Unit_Id}")]
+        [Route("unit/{Unit_Id}")]
         public async Task<ActionResult<IEnumerable<Exam>>> getExamByUnit(int Unit_Id)
         {
             return Ok(await _examService.getExamByUnit(Unit_Id));

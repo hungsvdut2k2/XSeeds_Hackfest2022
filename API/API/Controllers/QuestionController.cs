@@ -36,7 +36,7 @@ namespace API.Controllers
             return Ok(await _questionService.GetQuestionById(Question_Id));
         }
         [HttpGet]
-        [Route("Question/{Exam_Id}")]
+        [Route("{Exam_Id}")]
         public async Task<ActionResult<IEnumerable<Question>>> getQuestionByExam(int Exam_Id)
         {
             return Ok(await _questionService.getQuestionByExam(Exam_Id));
@@ -94,7 +94,7 @@ namespace API.Controllers
             return Ok();
         }
 
-        [HttpDelete("Question/{question_Id}")]
+        [HttpDelete("{question_Id}")]
         public async Task<ActionResult> DeleteQuestion(int question_Id)
         {
             var questionDelete = await _questionService.GetQuestionById(question_Id);

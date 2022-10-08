@@ -24,10 +24,10 @@ namespace API.Controllers
             IEnumerable<LearningPath> res = dataContext.LearningPath.ToList();
             return Ok(res);
         }
-        [HttpGet("{Path_Id}")]
-        public async Task<ActionResult<IEnumerable<Course>>> GetAllCourseInPath(int Path_Id)
+        [HttpGet("{Level}")]
+        public async Task<ActionResult<IEnumerable<Course>>> GetAllCourseInPath(string Level)
         {
-            IEnumerable<Course> res = dataContext.Courses.Where(w => w.Learning_Path_Id == Path_Id).ToList();
+            IEnumerable<Course> res = dataContext.Courses.Where(w => w.Level == Level).ToList();
             return Ok(res);
         }
     }

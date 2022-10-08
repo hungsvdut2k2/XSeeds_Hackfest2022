@@ -29,7 +29,7 @@ namespace API.Controllers
             return Ok(result);
         }
         [HttpGet]
-        [Route("Student/{Student_Id}")]
+        [Route("{Student_Id}")]
         public async Task<ActionResult<Student>> GetStudentById(int Student_Id)
         {
             return Ok(await _studentService.GetStudentById(Student_Id));

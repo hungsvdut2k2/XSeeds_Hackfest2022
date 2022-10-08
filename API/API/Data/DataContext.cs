@@ -53,10 +53,6 @@ namespace API.Data
                 .HasOne<Forum>(s => s.Forum)
                 .WithMany(g => g.ForumThreads)
                 .HasForeignKey(s => s.Forum_Id);
-            modelBuilder.Entity<Course>()
-                .HasOne<LearningPath>(s => s.LearningPath)
-                .WithMany(g => g.Course)
-                .HasForeignKey(s => s.Learning_Path_Id);
        
 
             //Many to many

@@ -4,6 +4,7 @@ using API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20221008092118_editRelationship")]
+    partial class editRelationship
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -60,7 +62,7 @@ namespace API.Migrations
 
                     b.HasKey("User_Id");
 
-                    b.ToTable("Accounts", (string)null);
+                    b.ToTable("Accounts");
                 });
 
             modelBuilder.Entity("API.Models.ModelDBs.Admin", b =>
@@ -70,7 +72,7 @@ namespace API.Migrations
 
                     b.HasKey("User_Id");
 
-                    b.ToTable("Admin", (string)null);
+                    b.ToTable("Admin");
                 });
 
             modelBuilder.Entity("API.Models.ModelDBs.Course", b =>
@@ -97,7 +99,7 @@ namespace API.Migrations
 
                     b.HasKey("Course_Id");
 
-                    b.ToTable("Courses", (string)null);
+                    b.ToTable("Courses");
                 });
 
             modelBuilder.Entity("API.Models.ModelDBs.Forum", b =>
@@ -114,7 +116,7 @@ namespace API.Migrations
 
                     b.HasKey("Forum_Id");
 
-                    b.ToTable("Forums", (string)null);
+                    b.ToTable("Forums");
                 });
 
             modelBuilder.Entity("API.Models.ModelDBs.ForumThread", b =>
@@ -140,7 +142,7 @@ namespace API.Migrations
 
                     b.HasIndex("Forum_Id");
 
-                    b.ToTable("ForumThreads", (string)null);
+                    b.ToTable("ForumThreads");
                 });
 
             modelBuilder.Entity("API.Models.ModelDBs.GrammarUnit", b =>
@@ -158,7 +160,7 @@ namespace API.Migrations
 
                     b.HasKey("Unit_Id");
 
-                    b.ToTable("GrammarUnits", (string)null);
+                    b.ToTable("GrammarUnits");
                 });
 
             modelBuilder.Entity("API.Models.ModelDBs.Kanji", b =>
@@ -184,7 +186,7 @@ namespace API.Migrations
 
                     b.HasKey("Word_Id");
 
-                    b.ToTable("Kanjis", (string)null);
+                    b.ToTable("Kanjis");
                 });
 
             modelBuilder.Entity("API.Models.ModelDBs.StudentsCourses", b =>
@@ -208,7 +210,7 @@ namespace API.Migrations
 
                     b.HasIndex("Course_Id");
 
-                    b.ToTable("StudentsCourses", (string)null);
+                    b.ToTable("StudentsCourses");
                 });
 
             modelBuilder.Entity("API.Models.ModelDBs.StudentsUnits", b =>
@@ -229,7 +231,7 @@ namespace API.Migrations
 
                     b.HasIndex("Unit_Id");
 
-                    b.ToTable("StudentsUnits", (string)null);
+                    b.ToTable("StudentsUnits");
                 });
 
             modelBuilder.Entity("API.Models.ModelDBs.Tango", b =>
@@ -247,7 +249,7 @@ namespace API.Migrations
 
                     b.HasKey("Word_Id");
 
-                    b.ToTable("Tangos", (string)null);
+                    b.ToTable("Tangos");
                 });
 
             modelBuilder.Entity("API.Models.ModelDBs.Teacher", b =>
@@ -279,7 +281,7 @@ namespace API.Migrations
                     b.HasIndex("User_Id")
                         .IsUnique();
 
-                    b.ToTable("Teachers", (string)null);
+                    b.ToTable("Teachers");
                 });
 
             modelBuilder.Entity("API.Models.ModelDBs.Unit", b =>
@@ -313,7 +315,7 @@ namespace API.Migrations
                     b.HasIndex("Teacher_Id")
                         .IsUnique();
 
-                    b.ToTable("Units", (string)null);
+                    b.ToTable("Units");
                 });
 
             modelBuilder.Entity("API.Models.ModelDBs.UnitComment", b =>
@@ -334,7 +336,7 @@ namespace API.Migrations
 
                     b.HasIndex("Unit_Id");
 
-                    b.ToTable("UnitComments", (string)null);
+                    b.ToTable("UnitComments");
                 });
 
             modelBuilder.Entity("API.Models.ModelDBs.University", b =>
@@ -351,7 +353,7 @@ namespace API.Migrations
 
                     b.HasKey("University_Id");
 
-                    b.ToTable("Universities", (string)null);
+                    b.ToTable("Universities");
                 });
 
             modelBuilder.Entity("API.Models.ModelDBs.VideoUnit", b =>
@@ -368,7 +370,7 @@ namespace API.Migrations
 
                     b.HasKey("Unit_Id");
 
-                    b.ToTable("VideoUnits", (string)null);
+                    b.ToTable("VideoUnits");
                 });
 
             modelBuilder.Entity("API.Models.ModelDBs.Word", b =>
@@ -393,7 +395,7 @@ namespace API.Migrations
 
                     b.HasIndex("Unit_Id");
 
-                    b.ToTable("Words", (string)null);
+                    b.ToTable("Words");
                 });
 
             modelBuilder.Entity("API.Models.ModelDBs.WordUnit", b =>
@@ -410,7 +412,7 @@ namespace API.Migrations
 
                     b.HasKey("Unit_Id");
 
-                    b.ToTable("WordUnits", (string)null);
+                    b.ToTable("WordUnits");
                 });
 
             modelBuilder.Entity("API.Models.Student", b =>
@@ -442,7 +444,7 @@ namespace API.Migrations
                     b.HasIndex("User_Id")
                         .IsUnique();
 
-                    b.ToTable("Students", (string)null);
+                    b.ToTable("Students");
                 });
 
             modelBuilder.Entity("API.Models.ModelDBs.Admin", b =>

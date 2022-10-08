@@ -44,9 +44,9 @@ namespace API.Services
             return await _unitRepository.GetUnitById(course_Id);
         }
 
-        public void Update(Unit teacher)
+        public void Update(Unit unit)
         {
-             _unitRepository.Update(teacher);
+             _unitRepository.Update(unit);
             _unitRepository.Save();
 
         }

@@ -54,6 +54,7 @@ namespace API.Controllers
             }
             _studentService.Delete(Student);
             return Ok("Delete Successfully");
+
         }
     }
 }

@@ -5,7 +5,7 @@ namespace API.Models.ModelDBs
 {
     public class WordUnit
     {
-        [System.ComponentModel.DataAnnotations.KeyAttribute()]
+        [Key]
         [ForeignKey("Unit")]
         public int Unit_Id {get; set;}
         public string Unit_Name {get; set;}

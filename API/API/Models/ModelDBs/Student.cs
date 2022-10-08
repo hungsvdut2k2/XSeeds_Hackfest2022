@@ -16,9 +16,13 @@ namespace API.Models
         public string KatakanaName { get; set; }
 
         public virtual University University { get; set; }
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
         [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
         public virtual Account Account { get; set; }
+        [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
 
         [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
         public virtual ICollection<StudentsCourses> StudentsCourses { get; set; }

@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/student")]
     [ApiController]
     public class StudentController : ControllerBase
     {
@@ -19,7 +19,6 @@ namespace API.Controllers
             this._studentService = studentService;
         }
         [HttpGet]
-        [Route("")]
         public async Task<ActionResult<IEnumerable<Student>>> GetAllStudents()
         {
             var result = await _studentService.GetAllAsync();
@@ -31,27 +30,13 @@ namespace API.Controllers
         {
             return Ok(await _studentService.GetStudentById(Student_Id));
         }
-        [HttpPost]
-        public async Task<ActionResult> AddStudent([FromBody] Student student)
-        {
-            if (student == null)
-            {
-                return BadRequest(ModelState);
-            }
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            await _studentService.AddAsync(student);
-            return Ok("Successfully created");
-        }
         [HttpPut]
-        public async Task<ActionResult> UpdateStudent([FromBody] Student student)
+        public async Task<ActionResult> UpdateStudent([FromBody] StudentDTO request)
         {
-            if (student == null)
-            {
-                return BadRequest();
-            }
+
+            Student student = await _studentService.GetStudentById(request.Student_Id);
+            student.VietnameseName = request.VietnameseName;
+            student.KatakanaName = request.KatakanaName;
             _studentService.Update(student);
             return Ok("Update Successfully");
         }

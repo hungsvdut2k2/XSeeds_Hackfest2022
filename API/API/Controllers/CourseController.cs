@@ -1,4 +1,5 @@
-﻿using API.Models.ModelDBs;
+﻿using API.Models;
+using API.Models.ModelDBs;
 using API.Models.ModelDTOs;
 using API.Services.IServices;
 using AutoMapper;
@@ -8,19 +9,52 @@ using System.Reflection.Metadata.Ecma335;
 
 namespace API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/course")]
     [ApiController]
     public class CourseController : ControllerBase
     {
         private readonly ICourseService _courseService;
+        private readonly IStudentService _studentService;
         private readonly IStudentCourseService _studentCourseService;
 
-        public CourseController(ICourseService courseService, IStudentCourseService studentCourseService)
+        public CourseController(ICourseService courseService, IStudentCourseService studentCourseService, IStudentService studentService)
         {
             this._courseService = courseService;
             this._studentCourseService = studentCourseService;
+            this._studentService = studentService;
         }
-        [HttpGet("student/{Student_Id}")]
+        [HttpGet("student/{Course_Id}")]
+        public async Task<ActionResult<IEnumerable<Student>>> GetAllStudentInCourse(int Course_Id)
+        {
+            Course course = await _courseService.GetCourseById(Course_Id);
+            if(course == null)
+            {
+                return BadRequest("Not Found");
+            }
+            IEnumerable<StudentsCourses> studentsCourses = await _studentCourseService.GetByCourseId(Course_Id);
+            List<Student> students = new List<Student>();
+            foreach(var item in studentsCourses)
+            {
+                Student temp =  await _studentService.GetStudentById(item.Student_Id);
+                students.Add(temp);
+            }
+            return Ok(students);
+        }
+        [HttpPost("register/{Course_Id}/{Student_Id}")]
+        public async Task<ActionResult> RegisterCourse(int Course_Id, int Student_Id)
+        {
+            Student student = await _studentService.GetStudentById(Student_Id);
+            Course course =  await _courseService.GetCourseById(Course_Id);
+            var new_middle_object = new StudentsCourses
+            {
+                Student = student,
+                Course = course,
+                Start_At = DateTime.Now,
+            };
+            await _studentCourseService.AddAsync(new_middle_object);
+            return Ok();
+        }
+        [HttpGet("student/register/{Student_Id}")]
         public async Task<ActionResult<IEnumerable<Course>>> GetAllRegisterdCourse(int Student_Id)
         {
             IEnumerable<StudentsCourses> middle_object = await _studentCourseService.GetByStudentId(Student_Id);
@@ -60,7 +94,6 @@ namespace API.Controllers
             return Ok(totalStar);
         }
         [HttpGet]
-        [Route("")]
         public async Task<ActionResult<IEnumerable<Course>>> GetAllCourses()
         {
             var result = await _courseService.GetAllAsync();
@@ -72,10 +105,11 @@ namespace API.Controllers
         {
             return Ok(await _courseService.GetCourseById(Course_Id));
         }
-        [HttpPost("")]
+        [HttpPost]
 
         public async Task<ActionResult> AddCourse([FromBody] CourseDTO request)
         {
+<<<<<<< Updated upstream
             var newCourse = new Course
             {
                 Course_Name = request.Course_Name,
@@ -85,14 +119,30 @@ namespace API.Controllers
             };
             await _courseService.AddAsync(newCourse);
             return Ok();
+=======
+            Course newCourse = new Course
+            {
+                Course_Name = request.Course_Name,
+                EstimateDay = request.EstimateDay,
+                Type = request.Type,
+                Max_Bonus_Star = request.Max_Bonus_Star
+            };
+            await _courseService.AddAsync(newCourse);
+            return Ok("Successfully created");
+>>>>>>> Stashed changes
         }
         [HttpPut]
         public async Task<ActionResult> UpdateCourse([FromBody] CourseDTO request)
         {
+            Course course = await _courseService.GetCourseById(request.Course_Id);
             if (course == null)
             {
                 return BadRequest();
             }
+            course.EstimateDay = request.EstimateDay;
+            course.Max_Bonus_Star = request.Max_Bonus_Star;
+            course.Type = request.Type;
+            course.Course_Name = request.Course_Name;
             _courseService.Update(course);
             return Ok("Update Successfully");
         }

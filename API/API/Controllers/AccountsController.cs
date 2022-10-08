@@ -145,13 +145,13 @@ namespace API.Controllers
                 return BadRequest("User Not Found");
             }
             loginAccount.ResetPasswordToken = _accountService.CreateRandomToken();
-            loginAccount.ResetTokenExpires = DateTime.Now.AddMinutes(1);
+            loginAccount.ResetTokenExpires = DateTime.Now.AddMinutes(5);
             _accountService.Update(loginAccount);
             var sentEmail = new EmailDTO
             {
                 To = email,
                 Subject = "Reset Password Token",
-                Body = "Your Token Will Be Expired In 1 minutes: " + loginAccount.ResetPasswordToken
+                Body = "Your Token Will Be Expired In 5 minutes: " + loginAccount.ResetPasswordToken
             }; 
             _emailService.sendEmail(sentEmail);
             return Ok();

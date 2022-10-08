@@ -38,8 +38,13 @@ builder.Services.AddScoped<IStudentRepository, StudentRepository>();
 builder.Services.AddScoped<IStudentService, StudentService>();
 
 builder.Services.AddScoped<IEmailService, EmailService>();
+
 builder.Services.AddScoped<ITeacherRepository, TeacherRepository>();
 builder.Services.AddScoped<ITeacherService, TeacherService>();
+
+builder.Services.AddScoped<IStudentCourseRepository, StudentCourseRepository>();
+builder.Services.AddScoped<IStudentCourseService, StudentCourseService>();
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {
     options.TokenValidationParameters = new TokenValidationParameters

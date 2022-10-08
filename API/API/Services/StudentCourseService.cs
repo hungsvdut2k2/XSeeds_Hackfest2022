@@ -33,6 +33,11 @@ namespace API.Services
             return _studentCourseRepository.GetAllAsync();
         }
 
+        public async Task<IEnumerable<StudentsCourses>> GetByCourseId(int Course_Id)
+        {
+            return await _studentCourseRepository.SearchAsync(sc => sc.Course_Id == Course_Id);
+        }
+
         public async Task<IEnumerable<StudentsCourses>> GetByStudentId(int Student_Id)
         {
             return await _studentCourseRepository.SearchAsync(sc => sc.Student_Id == Student_Id);

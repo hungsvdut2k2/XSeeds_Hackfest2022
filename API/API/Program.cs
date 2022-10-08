@@ -27,6 +27,10 @@ builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<IAccountService, AccountService>();
+
+builder.Services.AddScoped<ICourseRepository,CourseRepository>();
+builder.Services.AddScoped<ICourseService, CourseService>();
+
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {

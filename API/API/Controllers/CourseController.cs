@@ -173,5 +173,11 @@ namespace API.Controllers
             }
             return Ok(student);
         }
+        [HttpGet("{CourseId}/unit/{UnitNumber}")]
+        public async Task<ActionResult> GetUnitInCourse(int CourseId, int UnitNumber)
+        {
+            var selectedUnit = dataContext.Units.Where(w => w.Course_Id == CourseId && w.Number == UnitNumber).FirstOrDefault();
+            return Ok(selectedUnit);
+        }
     }
 }

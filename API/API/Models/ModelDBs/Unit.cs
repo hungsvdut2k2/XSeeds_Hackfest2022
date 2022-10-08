@@ -13,8 +13,7 @@ namespace API.Models.ModelDBs
         public string Type { get; set;}
         public int Number { get; set; }
         [ForeignKey("Teacher")]
-        public int Teacher_Id { get; set; }
-        
+        public int Teacher_Id { get; set; }        
         public virtual Course Course { get; set; }
         public virtual Teacher Teacher { get; set; }
         public virtual Exam Exam { get; set; }

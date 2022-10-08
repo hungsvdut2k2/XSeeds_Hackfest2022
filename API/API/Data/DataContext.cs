@@ -53,6 +53,11 @@ namespace API.Data
                 .HasOne<Forum>(s => s.Forum)
                 .WithMany(g => g.ForumThreads)
                 .HasForeignKey(s => s.Forum_Id);
+            modelBuilder.Entity<Course>()
+                .HasOne<LearningPath>(s => s.LearningPath)
+                .WithMany(g => g.Course)
+                .HasForeignKey(s => s.Learning_Path_Id);
+       
 
             //Many to many
             modelBuilder.Entity<StudentsCourses>().HasKey(sc => new { sc.Student_Id, sc.Course_Id });
@@ -83,5 +88,5 @@ namespace API.Data
         public DbSet<Question> Questions {get; set; }
 
         public DbSet<ExamStudent> ExamStudents { get; set; }
-    }
+        public DbSet<LearningPath> LearningPath { get; set; }    }
 }

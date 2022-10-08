@@ -47,8 +47,8 @@ namespace API.Services
         {
             List<Claim> claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Email,account.Email),
-                new Claim(ClaimTypes.Role, account.Role)
+                new Claim(JwtRegisteredClaimNames.Email,account.Email),
+                new Claim("Role", account.Role)
 
             };
             var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(_configuration.GetSection("AppSettings:Token").Value));

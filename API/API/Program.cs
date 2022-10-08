@@ -53,6 +53,9 @@ builder.Services.AddScoped<IWordUnitService, WordUnitService>();
 
 builder.Services.AddScoped<IExamRepository, ExamRepository>();
 builder.Services.AddScoped<IExamService, ExamService>();
+=======
+builder.Services.AddScoped<ILearningPathRepository, LearningPathRepository>();
+builder.Services.AddScoped<ILearningPathService, LearningPathService>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {

@@ -32,12 +32,6 @@ namespace API.Controllers
             var result = await _unitService.GetAllAsync();
             return Ok(result);
         }
-        [HttpGet]
-        [Route("{Unit_Id}")]
-        public async Task<ActionResult<Unit>> GetUnitById(int Unit_Id)
-        {
-            return Ok(await _unitService.GetUnitById(Unit_Id));
-        }
         [HttpPost]
         public async Task<ActionResult> AddUnit([FromBody] UnitDTO unitRequest)
         {

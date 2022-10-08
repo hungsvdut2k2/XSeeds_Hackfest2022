@@ -4,6 +4,7 @@ using API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20221008084742_replaceColumn")]
+    partial class replaceColumn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -85,8 +87,8 @@ namespace API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Estimate_Day")
-                        .HasColumnType("int");
+                    b.Property<DateTime>("EstimateDay")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("Learning_Path_Id")
                         .HasColumnType("int");
@@ -103,46 +105,6 @@ namespace API.Migrations
                     b.HasIndex("Learning_Path_Id");
 
                     b.ToTable("Courses");
-                });
-
-            modelBuilder.Entity("API.Models.ModelDBs.Exam", b =>
-                {
-                    b.Property<int>("Exam_Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Exam_Id"), 1L, 1);
-
-                    b.Property<int>("Unit_Id")
-                        .HasColumnType("int");
-
-                    b.HasKey("Exam_Id");
-
-                    b.HasIndex("Unit_Id")
-                        .IsUnique();
-
-                    b.ToTable("Exams");
-                });
-
-            modelBuilder.Entity("API.Models.ModelDBs.ExamStudent", b =>
-                {
-                    b.Property<int>("ExemStudent_Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ExemStudent_Id"), 1L, 1);
-
-                    b.Property<int>("Examp_Id")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Student_Id")
-                        .HasColumnType("int");
-
-                    b.HasKey("ExemStudent_Id");
-
-                    b.HasIndex("Examp_Id");
-
-                    b.ToTable("ExamStudents");
                 });
 
             modelBuilder.Entity("API.Models.ModelDBs.Forum", b =>
@@ -232,46 +194,6 @@ namespace API.Migrations
                     b.ToTable("Kanjis");
                 });
 
-            modelBuilder.Entity("API.Models.ModelDBs.Question", b =>
-                {
-                    b.Property<int>("Question_Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Question_Id"), 1L, 1);
-
-                    b.Property<string>("Answer")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("AnswerA")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("AnswerB")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("AnswerC")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("AnswerD")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Examp_Id")
-                        .HasColumnType("int");
-
-                    b.HasKey("Question_Id");
-
-                    b.HasIndex("Examp_Id");
-
-                    b.ToTable("Questions");
             modelBuilder.Entity("API.Models.ModelDBs.LearningPath", b =>
                 {
                     b.Property<int>("Path_Id")
@@ -561,27 +483,6 @@ namespace API.Migrations
                     b.Navigation("Account");
                 });
 
-            modelBuilder.Entity("API.Models.ModelDBs.Exam", b =>
-                {
-                    b.HasOne("API.Models.ModelDBs.Unit", "Unit")
-                        .WithOne("Exam")
-                        .HasForeignKey("API.Models.ModelDBs.Exam", "Unit_Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Unit");
-                });
-
-            modelBuilder.Entity("API.Models.ModelDBs.ExamStudent", b =>
-                {
-                    b.HasOne("API.Models.ModelDBs.Exam", "Exam")
-                        .WithMany("ExamStudents")
-                        .HasForeignKey("Examp_Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Exam");
-=======
             modelBuilder.Entity("API.Models.ModelDBs.Course", b =>
                 {
                     b.HasOne("API.Models.ModelDBs.LearningPath", "LearningPath")
@@ -632,17 +533,6 @@ namespace API.Migrations
                         .IsRequired();
 
                     b.Navigation("Word");
-                });
-
-            modelBuilder.Entity("API.Models.ModelDBs.Question", b =>
-                {
-                    b.HasOne("API.Models.ModelDBs.Exam", "Exam")
-                        .WithMany("Questions")
-                        .HasForeignKey("Examp_Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Exam");
                 });
 
             modelBuilder.Entity("API.Models.ModelDBs.StudentsCourses", b =>
@@ -801,13 +691,6 @@ namespace API.Migrations
                     b.Navigation("Units");
                 });
 
-            modelBuilder.Entity("API.Models.ModelDBs.Exam", b =>
-                {
-                    b.Navigation("ExamStudents");
-
-                    b.Navigation("Questions");
-                });
-
             modelBuilder.Entity("API.Models.ModelDBs.Forum", b =>
                 {
                     b.Navigation("ForumThreads");
@@ -826,9 +709,6 @@ namespace API.Migrations
 
             modelBuilder.Entity("API.Models.ModelDBs.Unit", b =>
                 {
-                    b.Navigation("Exam")
-                        .IsRequired();
-
                     b.Navigation("StudentsUnits");
 
                     b.Navigation("UnitComments");

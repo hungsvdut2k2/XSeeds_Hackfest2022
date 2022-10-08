@@ -1,4 +1,5 @@
-﻿using API.Models;
+﻿using API.Data;
+using API.Models;
 using API.Models.ModelDBs;
 using API.Models.ModelDTOs;
 using API.Services.IServices;
@@ -18,12 +19,14 @@ namespace API.Controllers
         private readonly ICourseService _courseService;
         private readonly IStudentService _studentService;
         private readonly IStudentCourseService _studentCourseService;
+        private readonly DataContext dataContext;
 
-        public CourseController(ICourseService courseService, IStudentCourseService studentCourseService, IStudentService studentService)
+        public CourseController(ICourseService courseService, IStudentCourseService studentCourseService, IStudentService studentService, DataContext dataContext)
         {
             this._courseService = courseService;
             this._studentCourseService = studentCourseService;
             this._studentService = studentService;
+            this.dataContext = dataContext;
         }
         [HttpGet("student/{Course_Id}")]
         public async Task<ActionResult<IEnumerable<Student>>> GetAllStudentInCourse(int Course_Id)
@@ -97,15 +100,18 @@ namespace API.Controllers
 
         public async Task<ActionResult> AddCourse([FromBody] CourseDTO request)
         {
+            LearningPath learningPath = dataContext.LearningPath.Where(w => w.Path_Id == request.LearningPathId).FirstOrDefault();
             var newCourse = new Course
             {
                 Course_Name = request.Course_Name,
-                EstimateDay = request.EstimateDay,
+                Estimate_Day = request.EstimateDay,
                 Max_Bonus_Star = request.Max_Bonus_Star,
-                Type = request.Type
+                Level = request.Level,
+                LearningPath = learningPath
             };
             await _courseService.AddAsync(newCourse);
-            return Ok();
+            return Ok(newCourse);
+            
         }
         [HttpPut]
         public async Task<ActionResult> UpdateCourse([FromBody] CourseDTO request)
@@ -115,9 +121,9 @@ namespace API.Controllers
             {
                 return BadRequest();
             }
-            course.EstimateDay = request.EstimateDay;
+            course.Estimate_Day = request.EstimateDay;
             course.Max_Bonus_Star = request.Max_Bonus_Star;
-            course.Type = request.Type;
+            course.Level = request.Level;
             course.Course_Name = request.Course_Name;
             _courseService.Update(course);
             return Ok("Update Successfully");
@@ -142,11 +148,22 @@ namespace API.Controllers
         {
             Student student = await _studentService.GetStudentById(User_Id);
             Course course = await _courseService.GetCourseById(Course_Id);
-            if(DateTime.Now > course.EstimateDay)
+            IEnumerable<StudentsCourses> middle_object = await _studentCourseService.GetByCourseId(Course_Id);
+            StudentsCourses studentsCourses = new StudentsCourses();
+            foreach(var item in middle_object)
+            {
+                if(item.Student_Id == User_Id)
+                {
+                    studentsCourses = item;
+                    break;
+                }
+            }
+            studentsCourses.Finish_At = DateTime.Now;
+            if(studentsCourses.Finish_At > studentsCourses.Start_At.AddDays(course.Estimate_Day))
             {
                 student.Star += course.Max_Bonus_Star / 4;
             }
-            else if(DateTime.Now == course.EstimateDay)
+            else if(studentsCourses.Finish_At == studentsCourses.Start_At)
             {
                 student.Star += course.Max_Bonus_Star / 2;
             }
@@ -154,7 +171,13 @@ namespace API.Controllers
             {
                 student.Star += course.Max_Bonus_Star;
             }
-            return Ok();
+            return Ok(student);
+        }
+        [HttpGet("{CourseId}/unit/{UnitNumber}")]
+        public async Task<ActionResult> GetUnitInCourse(int CourseId, int UnitNumber)
+        {
+            var selectedUnit = dataContext.Units.Where(w => w.Course_Id == CourseId && w.Number == UnitNumber).FirstOrDefault();
+            return Ok(selectedUnit);
         }
     }
 }

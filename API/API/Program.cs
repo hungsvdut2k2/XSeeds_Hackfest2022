@@ -31,6 +31,9 @@ builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<ICourseRepository,CourseRepository>();
 builder.Services.AddScoped<ICourseService, CourseService>();
 
+builder.Services.AddScoped<IStudentRepository, StudentRepository>();
+builder.Services.AddScoped<IStudentService, StudentService>();
+
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {

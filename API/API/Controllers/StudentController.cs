@@ -15,7 +15,7 @@ namespace API.Controllers
         private readonly IStudentService _studentService;
         private readonly IMapper mapper;
 
-        public StudentController(IStudentService studentService,IMapper mapper)
+        public StudentController(IStudentService studentService, IMapper mapper)
         {
             this._studentService = studentService;
             this.mapper = mapper;
@@ -29,11 +29,11 @@ namespace API.Controllers
         }
         [HttpGet]
         [Route("Student/{Student_Id}")]
-        [HttpPost("")]
         public async Task<ActionResult<Student>> GetStudentById(int Student_Id)
         {
             return Ok(await _studentService.GetStudentById(Student_Id));
         }
+        [HttpPost]
         public async Task<ActionResult> AddStudent([FromBody] StudentDTO StudentDTO)
         {
             if (StudentDTO == null)

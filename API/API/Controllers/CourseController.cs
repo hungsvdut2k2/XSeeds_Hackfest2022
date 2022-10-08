@@ -29,11 +29,12 @@ namespace API.Controllers
         }
         [HttpGet]
         [Route("Course/{Course_Id}")]
-        [HttpPost("")]
         public async Task<ActionResult<Course>> GetCourseById(int Course_Id)
         {
             return Ok(await _courseService.GetCourseById(Course_Id));
         }
+        [HttpPost("")]
+
         public async Task<ActionResult> AddCourse([FromBody] CourseDTO courseDTO)
         {
             if (courseDTO == null)

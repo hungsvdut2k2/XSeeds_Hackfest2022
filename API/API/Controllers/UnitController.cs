@@ -3,24 +3,28 @@ using API.Models.ModelDBs;
 using API.Models.ModelDTOs;
 using API.Services;
 using API.Services.IServices;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    [Route("api/[controller]")]
+    [EnableCors("Allow CORS")]
+    [Route("api/unit")]
     [ApiController]
     public class UnitController : ControllerBase
     {
         private readonly IUnitService _unitService;
         private readonly ITeacherService _teacherService;
         private readonly ICourseService _courseService;
+        private readonly IStudentService _studentService;
 
-        public UnitController(IUnitService unitService, ITeacherService teacherService, ICourseService courseService)
+        public UnitController(IUnitService unitService, ITeacherService teacherService, ICourseService courseService, IStudentService studentService)
         {
             this._unitService = unitService;
             _teacherService = teacherService;
             _courseService = courseService;
+            _studentService = studentService;
         }
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Unit>>> GetAllUnits()
@@ -29,7 +33,7 @@ namespace API.Controllers
             return Ok(result);
         }
         [HttpGet]
-        [Route("Unit/{Unit_Id}")]
+        [Route("{Unit_Id}")]
         public async Task<ActionResult<Unit>> GetUnitById(int Unit_Id)
         {
             return Ok(await _unitService.GetUnitById(Unit_Id));
@@ -94,10 +98,20 @@ namespace API.Controllers
             _unitService.Delete(unit);
             return Ok("Delete Successfully");
         }
-        [HttpGet("Units/{Course_Id}")]
+        [HttpGet("course/{Course_Id}")]
         public async Task<ActionResult<IEnumerable<Unit>>> GetUnitByCourse(int Course_Id)
         {
             return Ok(await _unitService.getUnitByCourse(Course_Id));
+        }
+        [HttpPut("finish-unit/{Student_Id}/{Unit_Id}")]
+        public async Task<ActionResult> FinishUnit(int Student_Id, int Unit_Id)
+        {
+            Student student = await _studentService.GetStudentById(Student_Id);
+            Unit unit = await _unitService.GetUnitById(Unit_Id);
+            
+            student.Star += unit.Star;
+            _studentService.Update(student);
+            return Ok();
         }
     }
 }

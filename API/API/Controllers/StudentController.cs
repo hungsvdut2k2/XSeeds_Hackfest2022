@@ -3,11 +3,15 @@ using API.Models.ModelDBs;
 using API.Models.ModelDTOs;
 using API.Services.IServices;
 using AutoMapper;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections;
+using System.Linq;
 
 namespace API.Controllers
 {
+    [EnableCors("Allow CORS")]
     [Route("api/student")]
     [ApiController]
     public class StudentController : ControllerBase
@@ -55,6 +59,14 @@ namespace API.Controllers
             _studentService.Delete(Student);
             return Ok("Delete Successfully");
 
+        }
+        [HttpGet("/star")]
+        public async Task<ActionResult<IEnumerable<Student>>> GetStarOfStudents()
+        {
+            IEnumerable<Student> students = await _studentService.GetAllAsync();
+            Student[] listStudent = students.ToArray();
+            Student[] resList = listStudent.OrderByDescending(c => c.Star).ToArray();
+            return Ok(resList);
         }
     }
 }

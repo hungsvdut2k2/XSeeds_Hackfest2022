@@ -1,12 +1,14 @@
 ﻿using API.Models.ModelDBs;
 using API.Models.ModelDTOs;
 using API.Services.IServices;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    [Route("api/[controller]")]
+    [EnableCors("Allow CORS")]
+    [Route("api/word")]
     [ApiController]
     public class WordController : ControllerBase
     {

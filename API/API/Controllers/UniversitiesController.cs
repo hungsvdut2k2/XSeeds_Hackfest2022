@@ -1,10 +1,12 @@
 ﻿using API.Data;
 using API.Models.ModelDBs;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
+    [EnableCors("Allow CORS")]
     [Route("api/university")]
     [ApiController]
     public class UniversitiesController : ControllerBase

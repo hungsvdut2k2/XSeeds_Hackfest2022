@@ -3,12 +3,14 @@ using API.Models.ModelDBs;
 using API.Models.ModelDTOs;
 using API.Services.IServices;
 using AutoMapper;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Reflection.Metadata.Ecma335;
 
 namespace API.Controllers
 {
+    [EnableCors("Allow CORS")]
     [Route("api/course")]
     [ApiController]
     public class CourseController : ControllerBase
@@ -79,20 +81,6 @@ namespace API.Controllers
             }
             return Ok(completedCourses);
         }
-        [HttpGet("student/star/{Student_Id}")]
-        public async Task<ActionResult<int>> GetStarsOfStudent(int Student_Id)
-        {
-            IEnumerable<StudentsCourses> middle_object = await _studentCourseService.GetByStudentId(Student_Id);
-            int totalStar = 0;
-            foreach (var item in middle_object)
-            {
-                if (item.Finish_At != null)
-                {
-                    totalStar += item.Star_Get_From_Course;
-                }
-            }
-            return Ok(totalStar);
-        }
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Course>>> GetAllCourses()
         {
@@ -149,6 +137,24 @@ namespace API.Controllers
             _courseService.Delete(course);
             return Ok("Delete Successfully");
         }
-
+        [HttpPut("finish-course/{User_Id}/{Course_Id}")]
+        public async Task<ActionResult> FinishCourse(int User_Id, int Course_Id)
+        {
+            Student student = await _studentService.GetStudentById(User_Id);
+            Course course = await _courseService.GetCourseById(Course_Id);
+            if(DateTime.Now > course.EstimateDay)
+            {
+                student.Star += course.Max_Bonus_Star / 4;
+            }
+            else if(DateTime.Now == course.EstimateDay)
+            {
+                student.Star += course.Max_Bonus_Star / 2;
+            }
+            else
+            {
+                student.Star += course.Max_Bonus_Star;
+            }
+            return Ok();
+        }
     }
 }

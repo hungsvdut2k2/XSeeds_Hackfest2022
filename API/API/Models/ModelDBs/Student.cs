@@ -7,13 +7,14 @@ namespace API.Models
 {
     public class Student
     {
-        [ForeignKey("Account")]
-        public int User_Id { get; set; }
         [Key]
         public int Student_Id { get; set; }
+        [ForeignKey("Account")]
+        public int User_Id { get; set; }
         public int University_Id { get; set; }
         public string VietnameseName { get; set; }
         public string KatakanaName { get; set; }
+        public int Star { get; set; }
 
         public virtual University University { get; set; }
         [JsonIgnore(Condition = JsonIgnoreCondition.Always)]

@@ -109,7 +109,6 @@ namespace API.Controllers
 
         public async Task<ActionResult> AddCourse([FromBody] CourseDTO request)
         {
-<<<<<<< Updated upstream
             var newCourse = new Course
             {
                 Course_Name = request.Course_Name,
@@ -119,17 +118,6 @@ namespace API.Controllers
             };
             await _courseService.AddAsync(newCourse);
             return Ok();
-=======
-            Course newCourse = new Course
-            {
-                Course_Name = request.Course_Name,
-                EstimateDay = request.EstimateDay,
-                Type = request.Type,
-                Max_Bonus_Star = request.Max_Bonus_Star
-            };
-            await _courseService.AddAsync(newCourse);
-            return Ok("Successfully created");
->>>>>>> Stashed changes
         }
         [HttpPut]
         public async Task<ActionResult> UpdateCourse([FromBody] CourseDTO request)

@@ -72,6 +72,7 @@ namespace API.Controllers
                 {
                     University_Id = request.University_Id,
                     Account = newAccount,
+                    Teacher_Name = request.Full_Name,
                     Katakana_Name = request.Katakana_Name
                 };
                await  _teacherService.AddAsync(newTeacher);

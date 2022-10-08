@@ -13,10 +13,14 @@ namespace API.Controllers
     public class UnitController : ControllerBase
     {
         private readonly IUnitService _unitService;
+        private readonly ITeacherService _teacherService;
+        private readonly ICourseService _courseService;
 
-        public UnitController(IUnitService unitService)
+        public UnitController(IUnitService unitService, ITeacherService teacherService, ICourseService courseService)
         {
             this._unitService = unitService;
+            _teacherService = teacherService;
+            _courseService = courseService;
         }
         [HttpGet]
         [Route("")]
@@ -42,27 +46,32 @@ namespace API.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var unit = new Unit();
-            unit.Unit_Id = unitRequest.Unit_Id;
-            unit.Teacher_Id = unitRequest.Teacher_Id;
-            unit.Course_Id = unitRequest.Course_Id;
-            unit.Star = unitRequest.Star;
-            await _unitService.AddAsync(unit);
-            return Ok("Successfully created");
+            Teacher author = await _teacherService.GetTeacherById(unitRequest.Teacher_Id);
+            Course course = await _courseService.GetCourseById(unitRequest.Course_Id);
+            var unit = new Unit
+            {
+                Teacher = author,
+                Course = course,
+                Type = unitRequest.Type,
+                Number = unitRequest.Number,
+                Star = unitRequest.Star
+            };
+            _unitService.AddAsync(unit);
+            return Ok();
         }
         [HttpPut]
-        public async Task<ActionResult> UpdateUnit([FromBody] UnitDTO unitRequest)
+        public async Task<ActionResult> UpdateUnit(int Unit_Id,[FromBody] UnitDTO unitRequest)
         {
             if (unitRequest == null)
             {
                 return BadRequest();
             }
-            Unit unit = await _unitService.GetUnitById(unitRequest.Unit_Id);
+            Unit unit = await _unitService.GetUnitById(Unit_Id);
             if(unit == null)
             {
                 return NotFound();
             }
-            unit.Unit_Id = unitRequest.Unit_Id;
+            unit.Unit_Id = Unit_Id;
             unit.Teacher_Id = unitRequest.Teacher_Id;
             unit.Course_Id = unitRequest.Course_Id;
             unit.Star = unitRequest.Star;

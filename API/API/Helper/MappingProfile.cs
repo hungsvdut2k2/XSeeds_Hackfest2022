@@ -1,4 +1,5 @@
-﻿using API.Models.ModelDBs;
+﻿using API.Models;
+using API.Models.ModelDBs;
 using API.Models.ModelDTOs;
 using AutoMapper;
 
@@ -10,6 +11,9 @@ namespace API.Helper
         {
             CreateMap<Course, CourseDTO>();
             CreateMap<CourseDTO, Course>();
+            CreateMap<StudentDTO, Student>();
+            CreateMap<Student, StudentDTO>();
+
 
         }
     }

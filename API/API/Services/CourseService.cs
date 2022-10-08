@@ -37,7 +37,8 @@ namespace API.Services.IServices
 
         public void Update(Course course)
         {
-            throw new NotImplementedException();
+            _courseRepository.Update(course);
+            _courseRepository.Save();
         }
     }
 }

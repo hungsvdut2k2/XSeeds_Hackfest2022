@@ -4,6 +4,7 @@ using API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20221008174812_AddExamStudentTable")]
+    partial class AddExamStudentTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -85,22 +87,17 @@ namespace API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Estimate_Day")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Learning_Path_Id")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Level")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("EstimateDay")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("Max_Bonus_Star")
                         .HasColumnType("int");
 
-                    b.HasKey("Course_Id");
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasIndex("Learning_Path_Id");
+                    b.HasKey("Course_Id");
 
                     b.ToTable("Courses");
                 });
@@ -272,21 +269,6 @@ namespace API.Migrations
                     b.HasIndex("Examp_Id");
 
                     b.ToTable("Questions");
-            modelBuilder.Entity("API.Models.ModelDBs.LearningPath", b =>
-                {
-                    b.Property<int>("Path_Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Path_Id"), 1L, 1);
-
-                    b.Property<string>("Path_Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Path_Id");
-
-                    b.ToTable("LearningPath");
                 });
 
             modelBuilder.Entity("API.Models.ModelDBs.StudentsCourses", b =>
@@ -581,16 +563,6 @@ namespace API.Migrations
                         .IsRequired();
 
                     b.Navigation("Exam");
-=======
-            modelBuilder.Entity("API.Models.ModelDBs.Course", b =>
-                {
-                    b.HasOne("API.Models.ModelDBs.LearningPath", "LearningPath")
-                        .WithMany("Course")
-                        .HasForeignKey("Learning_Path_Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("LearningPath");
                 });
 
             modelBuilder.Entity("API.Models.ModelDBs.ForumThread", b =>
@@ -811,11 +783,6 @@ namespace API.Migrations
             modelBuilder.Entity("API.Models.ModelDBs.Forum", b =>
                 {
                     b.Navigation("ForumThreads");
-                });
-
-            modelBuilder.Entity("API.Models.ModelDBs.LearningPath", b =>
-                {
-                    b.Navigation("Course");
                 });
 
             modelBuilder.Entity("API.Models.ModelDBs.Teacher", b =>

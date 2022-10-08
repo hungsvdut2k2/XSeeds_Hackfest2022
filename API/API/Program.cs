@@ -51,6 +51,9 @@ builder.Services.AddScoped<IUniversityService, UniversityService>();
 builder.Services.AddScoped<IWordUnitRepository, WordUnitRepository>();
 builder.Services.AddScoped<IWordUnitService, WordUnitService>();
 
+builder.Services.AddScoped<IExamRepository, ExamRepository>();
+builder.Services.AddScoped<IExamService, ExamService>();
+=======
 builder.Services.AddScoped<ILearningPathRepository, LearningPathRepository>();
 builder.Services.AddScoped<ILearningPathService, LearningPathService>();
 

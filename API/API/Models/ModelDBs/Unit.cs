@@ -17,6 +17,7 @@ namespace API.Models.ModelDBs
         
         public virtual Course Course { get; set; }
         public virtual Teacher Teacher { get; set; }
+        public virtual Exam Exam { get; set; }
 
         public virtual ICollection<UnitComment> UnitComments { get; set; }
         [JsonIgnore(Condition = JsonIgnoreCondition.Always)]

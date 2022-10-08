@@ -31,6 +31,16 @@ namespace API.Data
            .WithMany(g => g.Units)
            .HasForeignKey(s => s.Course_Id);
 
+            modelBuilder.Entity<Question>()
+           .HasOne<Exam>(s => s.Exam)
+           .WithMany(g => g.Questions)
+           .HasForeignKey(s => s.Examp_Id);
+
+            modelBuilder.Entity<ExamStudent>()
+           .HasOne<Exam>(s => s.Exam)
+           .WithMany(g => g.ExamStudents)
+           .HasForeignKey(s => s.Examp_Id);
+
             modelBuilder.Entity<UnitComment>()
          .HasOne<Unit>(s => s.Unit)
          .WithMany(g => g.UnitComments)
@@ -74,6 +84,9 @@ namespace API.Data
         public DbSet<Tango> Tangos { get; set; }
         public DbSet<Forum> Forums { get; set; }
         public DbSet<ForumThread> ForumThreads { get; set; }
-        public DbSet<LearningPath> LearningPath { get; set; }
-    }
+        public DbSet<Exam> Exams { get; set; }
+        public DbSet<Question> Questions {get; set; }
+
+        public DbSet<ExamStudent> ExamStudents { get; set; }
+        public DbSet<LearningPath> LearningPath { get; set; }    }
 }

@@ -60,6 +60,18 @@ builder.Services.AddScoped<IQuestionService, QuestionService>();
 builder.Services.AddScoped<ILearningPathRepository, LearningPathRepository>();
 builder.Services.AddScoped<ILearningPathService, LearningPathService>();
 
+builder.Services.AddScoped<IKanjiRepository, KanjiRepository>();
+builder.Services.AddScoped<IKanjiService, KanjiService>();
+
+builder.Services.AddScoped<ITangoRepository, TangoRepository>();
+builder.Services.AddScoped<ITangoService, TangoService>();
+
+builder.Services.AddScoped<IWordRepository, WordRepository>();
+builder.Services.AddScoped<IWordService, WordService>();
+
+
+
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {
     options.TokenValidationParameters = new TokenValidationParameters
